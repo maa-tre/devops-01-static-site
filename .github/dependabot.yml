@@ -1,0 +1,9 @@
+# Opens a pull request when a GitHub Action used in your workflows has a new version.
+# Old action versions eventually stop working (this already happened with Node 20),
+# so this keeps the pipeline healthy with almost no effort.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

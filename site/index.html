@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>This page shipped itself</title>
+  <meta name="description" content="A demo site that is built, checked and published automatically by GitHub Actions.">
+  <meta name="deployed-commit" content="__COMMIT_FULL__">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>This page shipped itself.</h1>
+    <p class="lede">
+      Every change pushed to the main branch is built, checked and published by
+      GitHub Actions. Nobody uploaded this page by hand.
+    </p>
+
+    <section class="receipt" aria-labelledby="receipt-title">
+      <div class="receipt-head">
+        <h2 id="receipt-title">Deployment receipt</h2>
+        <span class="stamp">Published</span>
+      </div>
+      <dl>
+        <dt>Commit</dt>
+        <dd>__COMMIT_SHORT__</dd>
+        <dt>Built</dt>
+        <dd>__BUILT_AT__</dd>
+        <dt>Pipeline</dt>
+        <dd><a href="__RUN_URL__">__RUN_LABEL__</a></dd>
+      </dl>
+    </section>
+
+    <div id="update-notice" class="notice" role="status" hidden>
+      <p>A newer version of this page is live.</p>
+      <button type="button" id="reload">Reload this page</button>
+    </div>
+
+    <h2>What happened</h2>
+    <ol class="steps">
+      <li><strong>Pushed.</strong> A change reached the main branch on GitHub.</li>
+      <li><strong>Built.</strong> A script copied the site and stamped in the commit and time shown above.</li>
+      <li><strong>Checked.</strong> Another script confirmed every link works and every page has a title.</li>
+      <li><strong>Published.</strong> GitHub Pages started serving the new files over HTTPS.</li>
+    </ol>
+
+    <h2>Try it</h2>
+    <p>
+      Edit the headline in <code>site/index.html</code>, commit, and push.
+      Keep this tab open: within a couple of minutes a notice appears here
+      offering to reload the page.
+    </p>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

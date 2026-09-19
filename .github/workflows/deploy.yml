@@ -1,0 +1,66 @@
+name: Build, check, deploy
+
+# WHEN does this robot wake up?
+on:
+  pull_request:          # someone proposes a change -> build + check only (never publishes)
+  push:
+    branches: [main]     # a change lands on main   -> build + check + publish
+  workflow_dispatch:     # manual "Run workflow" button in the Actions tab
+
+# Default permissions for every job: read-only. Jobs that need more ask for it below.
+permissions:
+  contents: read
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # JOB 1: build and check. Runs on pull requests AND on main.
+  # If anything here fails, the deploy job never starts, so the live site is safe.
+  # ---------------------------------------------------------------------------
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v6
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+
+      - name: Build the site (site/ -> dist/)
+        run: python3 scripts/build.py
+
+      - name: Check the site (fails the run if something is broken)
+        run: python3 scripts/check_site.py dist
+
+      - name: Package the site for publishing
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  # ---------------------------------------------------------------------------
+  # JOB 2: publish. Runs ONLY after job 1 succeeds, and never for pull requests.
+  # ---------------------------------------------------------------------------
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+
+    # Permissions needed to publish to Pages. No stored password is involved:
+    # GitHub hands this job a short-lived identity token for this one run.
+    permissions:
+      pages: write
+      id-token: write
+
+    # Only one publish at a time; a running publish is allowed to finish.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+
+    # Shows up in the repo's "Deployments" panel with a link to the live site.
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
