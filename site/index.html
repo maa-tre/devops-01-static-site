@@ -7,13 +7,20 @@
   <meta name="description" content="A demo site that is built, checked and published automatically by GitHub Actions.">
   <meta name="deployed-commit" content="__COMMIT_FULL__">
   <link rel="stylesheet" href="style.css">
+  
 </head>
 <body>
   <main>
-    <h1>This page shipped itself.</h1>
+    <h1>This page was updated live.</h1>
+    
     <p class="lede">
-      Every change pushed to the main branch is built, checked and published by
-      GitHub Actions. Nobody uploaded this page by hand.
+      A fresh change was made locally and rebuilt into the static site. The
+      deployment flow updates the published page automatically.
+    </p>
+
+    <p>
+      This paragraph was added to demonstrate that content changes appear in the live page
+      after the build and publish workflow runs successfully.
     </p>
 
     <section class="receipt" aria-labelledby="receipt-title">
