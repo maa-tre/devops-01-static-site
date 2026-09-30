@@ -22,7 +22,7 @@ pages-demo/
 └── README.md
 ```
 
-## Setup (about 10 minutes)
+## Setup
 
 1. **Create a new repository** on GitHub (public is simplest; for private repos, check that your GitHub plan supports Pages).
 2. **Upload this project's files** to it (keep the folder structure, including the hidden `.github` folder), or clone the repo and copy them in, then commit and push to `main`.
@@ -53,38 +53,3 @@ Push to main  -->  build  -->  check  -->  deploy (publish)
 - **deploy** uploads `dist/` to GitHub Pages. It only runs on `main`, never for pull requests.
 - Permissions are read-only by default. Only the deploy job gets the two extra permissions needed to publish.
 
-## Exercises (this is where the learning happens)
-
-Do these in order. Each has a "what to notice" so you connect the code to what you see.
-
-1. **Change something and watch it ship.** Edit the headline in `site/index.html`, commit, push. *Notice:* the Actions tab shows the run; the live page updates; a "newer version is live" notice can appear in an already-open tab within about a minute.
-2. **Break it on purpose.** Change `href="style.css"` to `href="styles.css"` and push. *Notice:* the **check** step fails with a clear message, **deploy** is skipped, and the live site is unchanged. Then fix it.
-3. **Use the pull request flow.** Make a change on a new branch and open a pull request. *Notice:* checks run, but nothing is published. Merge it and see the deploy happen.
-4. **Roll back a mistake.** Push a bad headline, then undo it with `git revert HEAD` and push. *Notice:* the pipeline republishes the old content. Reverting is the standard way to undo a bad change while keeping history.
-5. **Add your own check.** In `check_site.py`, add a rule (for example, fail if any image has no `alt` text). *Notice:* you extended the safety net yourself.
-6. **Remove a line and predict.** Delete `permissions:` from the deploy job and predict what will happen before you push. Then check whether you were right.
-
-## Questions to answer in your own words (a week from now)
-
-- What triggers the pipeline, and what does it do differently for a pull request?
-- Why are build and deploy two separate jobs?
-- Why does the deploy job need `id-token: write`, and why is there no password anywhere?
-- What does the live site show when the check step fails, and why?
-- What would you change if this site needed a database?
-
-If you can answer these without looking, you understand the pipeline.
-
-## Keeping it healthy
-
-- **Action versions expire.** GitHub Actions are versioned tools; old versions eventually stop working. Dependabot (configured here) opens pull requests when new versions appear. Review and merge them.
-- **This project pins these actions:** `actions/checkout@v6`, `actions/configure-pages@v6`, `actions/upload-pages-artifact@v5`, `actions/deploy-pages@v5`. Versions were current when this project was written; check each action's Releases page if something warns or fails.
-
-## Where to go next
-
-This project is stage 1. Good next steps, one at a time:
-
-1. A staging preview and an approval step before going live
-2. More automated checks (accessibility, page speed)
-3. A custom domain
-4. Uptime monitoring and alerts
-5. Infrastructure as code once you manage more than a couple of settings
